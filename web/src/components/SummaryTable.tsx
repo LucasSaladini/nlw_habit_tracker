@@ -1,3 +1,5 @@
+import { HabitDay } from "./HabitDay"
+
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
 export function SummaryTable() {
@@ -17,23 +19,14 @@ export function SummaryTable() {
                 })}
             </div>
             {/* Squares on the right of each week day */}
-            <div className="grid grid-rows-7 grid-flow-col gap-3 mt-10">
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
-                <div className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg"></div>
+            <div className="grid grid-rows-7 grid-flow-col gap-3 mt-11">
+                <HabitDay />
+                <HabitDay />
+                <HabitDay />
+                <HabitDay />
+                <HabitDay />
+                <HabitDay />
+                <HabitDay />
             </div>
         </div>
     )
