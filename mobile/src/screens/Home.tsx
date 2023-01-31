@@ -8,6 +8,7 @@ import { HabitDay, DAY_SIZE } from "../components/HabitDay";
 import { Header } from "../components/Header";
 import { useEffect, useState } from "react";
 import { Loading } from "../components/Loading";
+import dayjs from "dayjs";
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 const datesFromYearStart = generateRangeBetweenDates()
@@ -15,11 +16,18 @@ const datesFromYearStart = generateRangeBetweenDates()
 const minimumSummaryDateSizes = 18 * 5
 const amountOfDaysToFill = minimumSummaryDateSizes - datesFromYearStart.length
 
+type summaryProps = Array<{
+    id: string
+    date: string
+    amount: number
+    completed: number
+}>
+
 export function Home() {
     const { navigate } = useNavigation()
 
     const [loading, setLoading] = useState(true)
-    const [summary, setSummary] = useState(null)
+    const [summary, setSummary] = useState<summaryProps | null>(null)
 
     async function fetchData() {
         try {
@@ -64,17 +72,23 @@ export function Home() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 100}}
             >
-                <View className="flex-row flex-wrap">
-                    {
-                        datesFromYearStart.map(date => (
-                            <HabitDay 
-                                key={date.toISOString()} 
-                                onPress={() => navigate('habit', { date: date.toISOString() })}
-                            />
-                            ))
-                        }
+                {
+                    summary &&
+                    <View className="flex-row flex-wrap">
+                        {
+                            datesFromYearStart.map(date => {
+                                const dayWithHabits = summary.find(day => {
+                                    return dayjs(date).isSame(day.date, 'day')
+                                })
+                                return (
+                                    <HabitDay 
+                                        key={date.toISOString()} 
+                                        onPress={() => navigate('habit', { date: date.toISOString() })}
+                                    />
+                                )})
+                            }
 
-                    {
+                        {
                         amountOfDaysToFill > 0 && Array
                         .from({ length: amountOfDaysToFill })
                         .map((_, index) => (
@@ -86,7 +100,8 @@ export function Home() {
                             />
                             ))
                         }
-                </View>
+                    </View>
+                }
             </ScrollView>
         </View>
     )
