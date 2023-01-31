@@ -7,6 +7,7 @@ import { generateRangeBetweenDates } from '../utils/generate-range-between-dates
 import { HabitDay, DAY_SIZE } from "../components/HabitDay";
 import { Header } from "../components/Header";
 import { useEffect, useState } from "react";
+import { Loading } from "../components/Loading";
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 const datesFromYearStart = generateRangeBetweenDates()
@@ -36,6 +37,12 @@ export function Home() {
     useEffect(() => {
         fetchData()
     }, [])
+
+    if(loading) {
+        return (
+            <Loading />
+        )
+    }
 
     return (
         <View className="flex-1 bg-background px-8 pt-16">
