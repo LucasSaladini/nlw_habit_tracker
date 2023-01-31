@@ -1,3 +1,6 @@
+import dayjs from "dayjs"
+import { useEffect, useState } from "react"
+import { api } from "../lib/axios"
 import { generateDatesFromYearBeginning } from "../utils/generateDatesFromYearBeginning"
 import { HabitDay } from "./HabitDay"
 
@@ -8,7 +11,21 @@ const summaryDates = generateDatesFromYearBeginning()
 const minimumSummaryDatesSize = 18 * 7 //18 weeks
 const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length //show "placeholder" squares
 
+type Summary = {
+    id: string
+    date: string
+    amount: number
+    completed: number
+}[]
+
 export function SummaryTable() {
+    const [summary, setSummary] = useState<Summary>([])
+    useEffect(() => {
+        api.get('summary').then(response => {
+            setSummary(response.data)
+        })
+    }, [])
+
     return (
         <div className="w-full flex">
             {/* Display week days vertically based on const weekDays */}
@@ -27,11 +44,16 @@ export function SummaryTable() {
             {/* Squares on the right of each week day */}
             <div className="grid grid-rows-7 grid-flow-col gap-3 mt-11">
                 {summaryDates.map(date => {
+                    const dayInSummary = summary.find(day => {
+                        return dayjs(date).isSame(day.date, 'day')
+                    })
+
                     return (
                         <HabitDay 
                             key={date.toString()}
-                            amount={5} 
-                            completed={Math.random()*5} 
+                            date={date}
+                            amount={dayInSummary?.amount} 
+                            completed={dayInSummary?.completed} 
                         />
                     )
                 })}
